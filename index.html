@@ -3,63 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ставки на киберспорт</title>
+    <title>BOONT CS2 Betting</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .container { padding: 20px; }
-        button { padding: 10px; margin: 10px; font-size: 16px; cursor: pointer; }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Выберите матч</h2>
-        <button onclick="selectMatch('Team A vs Team B')">Team A vs Team B</button>
-        <button onclick="selectMatch('Team C vs Team D')">Team C vs Team D</button>
-        <div id="teamSelection" style="display:none;">
-            <h2>Выберите команду</h2>
-            <button onclick="selectTeam('Team A')">Team A</button>
-            <button onclick="selectTeam('Team B')">Team B</button>
-        </div>
-        <div id="betSection" style="display:none;">
-            <h2>Введите сумму ставки</h2>
-            <input type="number" id="betAmount" placeholder="Сумма">
-            <button onclick="placeBet()">Сделать ставку</button>
-        </div>
+    <button id="menu-toggle" class="hamburger-menu">&#9776;</button>
+
+    <div class="sidebar">
+        <nav>
+            <ul>
+                <li><a href="#">Главная</a></li>
+                <li><a href="#">Ставки</a></li>
+                <li><a href="#">Статистика</a></li>
+            </ul>
+        </nav>
     </div>
-    <script>
-        let selectedMatch = "";
-        let selectedTeam = "";
-        const tg = window.Telegram.WebApp;
 
-        function selectMatch(match) {
-            selectedMatch = match;
-            document.getElementById("teamSelection").style.display = "block";
-        }
+    <div class="main-content">
+        <header class="app-header">
+            <h1>BOONT</h1>
+            <div class="user-info">
+                <span class="balance">2 000</span>
+                <span class="currency">BOONT</span>
+            </div>
+        </header>
 
-        function selectTeam(team) {
-            selectedTeam = team;
-            document.getElementById("betSection").style.display = "block";
-        }
+        <main class="content">
+            <h2>Добро пожаловать в BOONT CS2 Betting</h2>
+            <p>Выберите раздел в меню слева.</p>
+        </main>
+    </div>
 
-        function placeBet() {
-            const amount = document.getElementById("betAmount").value;
-            if (!amount || amount <= 0) {
-                alert("Введите корректную сумму!");
-                return;
-            }
-            const betData = { match: selectedMatch, team: selectedTeam, amount: amount, user: tg.initDataUnsafe.user };
-            fetch("https://your-api.onrender.com/place_bet/", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(betData)
-            }).then(response => response.json()).then(data => {
-                alert("Ставка принята!");
-                tg.close();
-            }).catch(error => console.error(error));
-        }
-
-        tg.expand();
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
